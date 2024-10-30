@@ -244,47 +244,46 @@ public class RSADemo extends JFrame {
 		this.setTitle("Demo Application");
 		this.setResizable(false);
 		this.setVisible(true);
-    }
-    
-    private void generate(int bitLength, Random r) {
+	}
+	
+	private void generate(int bitLength, Random r) {
 		p = BigInteger.probablePrime(bitLength, r);
 		q = BigInteger.probablePrime(bitLength, r);
 		N = p.multiply(q);
 		M = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
-		
 		exp = BigInteger.valueOf(65537);
 		d = exp.modInverse(M);
-    }
+	}
+	
+	private void printInfo(JTextArea jta) {
+		jta.setText("p: \n" + p + "\nq: \n" + q
+				+ "\nN: \n" + N + "\n(p - 1)(q - 1): \n" + M
+				+ "\ne: " + exp + "\nd: \n" + d
+				+ "\ngcd(e, (p - 1)(q - 1)): " + exp.gcd(d));
+	}
     
-    private void printInfo(JTextArea jta) {
-    	jta.setText("p: \n" + p + "\nq: \n" + q
-    			+ "\nN: \n" + N + "\n(p - 1)(q - 1): \n" + M
-    			+ "\ne: " + exp + "\nd: \n" + d
-    			+ "\ngcd(e, (p - 1)(q - 1)): " + exp.gcd(d));
-    }
-    
-    private void printNonInvertibleInfo(JTextArea jta) {
-    	jta.setText("p: \n" + p + "\nq: \n" + q
-    			+ "\nN: \n" + N + "\n(p - 1)(q - 1): \n" + M
-    			+ "\ne: " + exp + "\ngcd(e, (p - 1)(q - 1)): " + exp.gcd(M) + "\nd: undefined"
-    			+ "\ne is not invertible mod (p-1)(q-1), please choose another e.");
-    }
-    
-    private void update(JTextField jtf1, JTextField jtf2, JTextField jtf3) {
-    	jtf1.setText(N.toString());
-    	jtf2.setText(exp.toString());
-    	jtf3.setText(d.toString());
-    }
-    
-    private int getLimit(BigInteger N) {
-    	int limit = 0;
-    	while (base.pow(limit).compareTo(N) < 0) {
-    		limit++;
-    	}
-    	return limit + 1;
-    }
-    
-    public static void main(String[] args) {
-    	new RSADemo();
-    }
+	private void printNonInvertibleInfo(JTextArea jta) {
+		jta.setText("p: \n" + p + "\nq: \n" + q
+				+ "\nN: \n" + N + "\n(p - 1)(q - 1): \n" + M
+				+ "\ne: " + exp + "\ngcd(e, (p - 1)(q - 1)): " + exp.gcd(M) + "\nd: undefined"
+				+ "\ne is not invertible mod (p-1)(q-1), please choose another e.");
+	}
+	
+	private void update(JTextField jtf1, JTextField jtf2, JTextField jtf3) {
+		jtf1.setText(N.toString());
+		jtf2.setText(exp.toString());
+		jtf3.setText(d.toString());
+	}
+	
+	private int getLimit(BigInteger N) {
+		int limit = 0;
+		while (base.pow(limit).compareTo(N) < 0) {
+			limit++;
+		}
+		return limit + 1;
+	}
+	
+	public static void main(String[] args) {
+		new RSADemo();
+	}
 }
