@@ -56,8 +56,8 @@ public class RSADemo extends JFrame {
 	JPanel infoPanel = new JPanel();
 
 	private Map<String, List<Integer>> data = new HashMap<>();
-
-    public RSADemo() {
+	
+	public RSADemo() {
     	int screenWidth = 810;
 		int screenHeight = 480;
 		
@@ -70,7 +70,7 @@ public class RSADemo extends JFrame {
 		mainPanel.add(rsaPanel);
 		mainPanel.add(outputPanel);
 		
-		// Remove the following when user input for N & e is implemented
+		// Remove the following when user input for N & d is implemented
 		generate((int) bitLengths.getSelectedItem(), new Random(3447679086515839964L));
 		nField.setEditable(false);
 		dField.setEditable(false);
@@ -82,7 +82,7 @@ public class RSADemo extends JFrame {
 		JScrollBar nameBar = new JScrollBar(JScrollBar.HORIZONTAL);
 		nameField.setText(String.valueOf(contacts.getSelectedItem()));
 		BoundedRangeModel nameBrm = nameField.getHorizontalVisibility();
-	    nameBar.setModel(nameBrm);
+		nameBar.setModel(nameBrm);
 		namePanel.add(nameField);
 		namePanel.add(nameBar);
 		namePanel.setBorder(BorderFactory.createEmptyBorder(0, 12, small, 12));
@@ -90,7 +90,7 @@ public class RSADemo extends JFrame {
 		JScrollBar nBar = new JScrollBar(JScrollBar.HORIZONTAL);
 		nField.setText(N.toString());
 		BoundedRangeModel nBrm = nField.getHorizontalVisibility();
-	    nBar.setModel(nBrm);
+		nBar.setModel(nBrm);
 		nPanel.add(nField);
 		nPanel.add(nBar);
 		nPanel.setBorder(BorderFactory.createEmptyBorder(0, 12, small, 12));
@@ -98,7 +98,7 @@ public class RSADemo extends JFrame {
 		JScrollBar eBar = new JScrollBar(JScrollBar.HORIZONTAL);
 		eField.setText(exp.toString());
 		BoundedRangeModel eBrm = eField.getHorizontalVisibility();
-	    eBar.setModel(eBrm);
+		eBar.setModel(eBrm);
 		ePanel.add(eField);
 		ePanel.add(eBar);
 		ePanel.setBorder(BorderFactory.createEmptyBorder(0, 12, small, 12));
@@ -106,7 +106,7 @@ public class RSADemo extends JFrame {
 		JScrollBar dBar = new JScrollBar(JScrollBar.HORIZONTAL);
 		dField.setText(d.toString());
 		BoundedRangeModel dBrm = dField.getHorizontalVisibility();
-	    dBar.setModel(dBrm);
+		dBar.setModel(dBrm);
 		dPanel.add(dField);
 		dPanel.add(dBar);
 		dPanel.setBorder(BorderFactory.createEmptyBorder(0, 12, small, 12));
@@ -138,86 +138,86 @@ public class RSADemo extends JFrame {
 		JScrollPane infoPane = new JScrollPane(infoArea);
 
 		JButton encryptButton = new JButton(new AbstractAction("Encrypt") {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            String s = inputArea.getText();
-	    		s = s.replace(String.valueOf((char) (8217)), String.valueOf((char) (39)));
-	            try {
-		            N = new BigInteger(nField.getText());
-		    		exp = new BigInteger(eField.getText());
-		    		if (eField.getText().equals("65537")) {
-			    		outputArea.setText(RSAMethods.encryptString(s, N, exp));
-			        	printInfo(infoArea);
-		    		} else {
-		    			d = exp.modInverse(M);
-		    			dField.setText(d.toString());
-		    			outputArea.setText(RSAMethods.encryptString(s, N, exp));
-			        	printInfo(infoArea);
-		    		}
-	            } catch (NumberFormatException err) {
-	            	outputArea.setText("");
-	            	infoArea.setText("Please enter a number for N and e.");
-	            } catch (ArithmeticException err) {
-	            	outputArea.setText("");
-	            	printNonInvertibleInfo(infoArea);
-	            }
-	        }
-	    });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = inputArea.getText();
+	    			s = s.replace(String.valueOf((char) (8217)), String.valueOf((char) (39)));
+	    			try {
+	    				N = new BigInteger(nField.getText());
+	    				exp = new BigInteger(eField.getText());
+	    				if (eField.getText().equals("65537")) {
+	    					outputArea.setText(RSAMethods.encryptString(s, N, exp));
+	    					printInfo(infoArea);
+	    				} else {
+	    					d = exp.modInverse(M);
+	    					dField.setText(d.toString());
+	    					outputArea.setText(RSAMethods.encryptString(s, N, exp));
+	    					printInfo(infoArea);
+	    				}
+	    			} catch (NumberFormatException err) {
+	    				outputArea.setText("");
+	    				infoArea.setText("Please enter a number for N and e.");
+	    			} catch (ArithmeticException err) {
+	    				outputArea.setText("");
+	    				printNonInvertibleInfo(infoArea);
+	    			}
+	    		}
+		});
 
 		JButton decryptButton = new JButton(new AbstractAction("Decrypt") {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            String s = inputArea.getText();
-	            try {
-		            N = new BigInteger(nField.getText());
-		    		d = new BigInteger(dField.getText());
-		    		exp = new BigInteger(eField.getText());
-		    		if (d.compareTo(exp.modInverse(M)) == 0) {
-			    		outputArea.setText(RSAMethods.decryptString(s, N, d));
-			        	printInfo(infoArea);
-		    		} else {
-		    			outputArea.setText("");
-		    			infoArea.setText("N, e, or d are not correct values.");
-		    		}
-	            } catch (NumberFormatException err) {
-	            	outputArea.setText("");
-	            	infoArea.setText("Please enter a number for N and d.");
-	            } catch (ArithmeticException err) {
-	            	outputArea.setText("");
-	            	printNonInvertibleInfo(infoArea);
-	            }
-	        }
-	    });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = inputArea.getText();
+				try {
+					N = new BigInteger(nField.getText());
+					d = new BigInteger(dField.getText());
+					exp = new BigInteger(eField.getText());
+					if (d.compareTo(exp.modInverse(M)) == 0) {
+						outputArea.setText(RSAMethods.decryptString(s, N, d));
+						printInfo(infoArea);
+					} else {
+						outputArea.setText("");
+						infoArea.setText("N, e, or d are not correct values.");
+					}
+				} catch (NumberFormatException err) {
+					outputArea.setText("");
+					infoArea.setText("Please enter a number for N and d.");
+				} catch (ArithmeticException err) {
+					outputArea.setText("");
+					printNonInvertibleInfo(infoArea);
+				}
+			}
+		});
 		
 		JButton generateButton = new JButton(new AbstractAction("New") {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            generate((int) bitLengths.getSelectedItem(), new Random());
-	            int newLimit = getLimit(N);
-	            String currentText = inputArea.getText();
-	            if (currentText.length() > newLimit) {
-	            	currentText = currentText.substring(0, newLimit);
-	            }
-	            inputArea.setDocument(new RSATextAreaCharacterLimit(newLimit));
-	            inputArea.setText(currentText);
-	            printInfo(infoArea);
-	            update(nField, eField, dField);
-	        }
-	    });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				generate((int) bitLengths.getSelectedItem(), new Random());
+				int newLimit = getLimit(N);
+				String currentText = inputArea.getText();
+				if (currentText.length() > newLimit) {
+					currentText = currentText.substring(0, newLimit);
+				}
+				inputArea.setDocument(new RSATextAreaCharacterLimit(newLimit));
+				inputArea.setText(currentText);
+				printInfo(infoArea);
+				update(nField, eField, dField);
+			}
+		});
 		
 		JButton loadButton = new JButton(new AbstractAction("Load") {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            // TODO
-	        }
-	    });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
 		
 		JButton saveButton = new JButton(new AbstractAction("Save") {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	            // TODO
-	        }
-	    });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
 		
 		rsaButtons.add(encryptButton);
 		rsaButtons.add(decryptButton);
