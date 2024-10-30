@@ -5,20 +5,18 @@ import java.util.List;
 
 public class RSAMethods {
 	
-	public static final int[] PRIMES = {2, 3, 5, 7, 11, 13, 19, 23, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79};
-	
 	private static List<Integer> numberToBase(BigInteger n, int base) {
 		List<Integer> digits = new ArrayList<>();
 		BigInteger b = BigInteger.valueOf(base);
-	    if (n.equals(BigInteger.ZERO)) {
-	        digits.add(0);
-	        return digits;
-	    }
-	    while (n.compareTo(BigInteger.ZERO) > 0) {
-	        digits.add(0, Integer.parseInt(n.remainder(b).toString()));
-	        n = n.divide(b);
-	    }
-	    return digits;
+		if (n.equals(BigInteger.ZERO)) {
+			digits.add(0);
+			return digits;
+		}
+		while (n.compareTo(BigInteger.ZERO) > 0) {
+			digits.add(0, Integer.parseInt(n.remainder(b).toString()));
+			n = n.divide(b);
+		}
+		return digits;
 	}
 	
 	private static List<Integer> stringToBase(String s, int base) {
