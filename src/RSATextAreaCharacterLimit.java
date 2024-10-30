@@ -4,7 +4,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 public class RSATextAreaCharacterLimit extends PlainDocument {
-
+	
 	private int limit;
 	
 	public RSATextAreaCharacterLimit(int charLimit) {
