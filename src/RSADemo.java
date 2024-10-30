@@ -278,13 +278,13 @@ public class RSADemo extends JFrame {
     
     private int getLimit(BigInteger N) {
     	int limit = 0;
-		while (base.pow(limit).compareTo(N) < 0) {
-			limit++;
-		}
-		return limit + 1;
+    	while (base.pow(limit).compareTo(N) < 0) {
+    		limit++;
+    	}
+    	return limit + 1;
     }
     
-	public static void main(String[] args) {
-		new RSADemo();
+    public static void main(String[] args) {
+    	new RSADemo();
     }
 }
