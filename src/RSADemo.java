@@ -37,12 +37,12 @@ public class RSADemo extends JFrame {
 	JPanel bottomLeftPanel = new JPanel(new GridLayout(4, 1));
 	JPanel namePanel = new JPanel(new GridLayout(2, 1));
 	JPanel nPanel = new JPanel(new GridLayout(2, 1));
-	JPanel ePanel = new JPanel(new GridLayout(2, 1));
+	JPanel expPanel = new JPanel(new GridLayout(2, 1));
 	JPanel dPanel = new JPanel(new GridLayout(2, 1));
 
 	JTextField nameField = new JTextField();
 	JTextField nField = new JTextField();
-	JTextField eField = new JTextField();
+	JTextField expField = new JTextField();
 	JTextField dField = new JTextField();
 	
 	JPanel rsaButtons = new JPanel(new GridLayout(1, 3));
@@ -80,40 +80,20 @@ public class RSADemo extends JFrame {
 		int small = (int) Math.round(screenHeight / 30.0);
 		
 		JScrollBar nameBar = new JScrollBar(JScrollBar.HORIZONTAL);
-		nameField.setText(String.valueOf(contacts.getSelectedItem()));
-		BoundedRangeModel nameBrm = nameField.getHorizontalVisibility();
-		nameBar.setModel(nameBrm);
-		namePanel.add(nameField);
-		namePanel.add(nameBar);
-		namePanel.setBorder(BorderFactory.createEmptyBorder(0, 12, small, 12));
+		setBar(nameBar, namePanel, nameField, String.valueOf(contacts.getSelectedItem()), small);
 		
 		JScrollBar nBar = new JScrollBar(JScrollBar.HORIZONTAL);
-		nField.setText(N.toString());
-		BoundedRangeModel nBrm = nField.getHorizontalVisibility();
-		nBar.setModel(nBrm);
-		nPanel.add(nField);
-		nPanel.add(nBar);
-		nPanel.setBorder(BorderFactory.createEmptyBorder(0, 12, small, 12));
+		setBar(nBar, nPanel, nField, N.toString(), small);
 
 		JScrollBar eBar = new JScrollBar(JScrollBar.HORIZONTAL);
-		eField.setText(exp.toString());
-		BoundedRangeModel eBrm = eField.getHorizontalVisibility();
-		eBar.setModel(eBrm);
-		ePanel.add(eField);
-		ePanel.add(eBar);
-		ePanel.setBorder(BorderFactory.createEmptyBorder(0, 12, small, 12));
+		setBar(eBar, expPanel, expField, exp.toString(), small);
 
 		JScrollBar dBar = new JScrollBar(JScrollBar.HORIZONTAL);
-		dField.setText(d.toString());
-		BoundedRangeModel dBrm = dField.getHorizontalVisibility();
-		dBar.setModel(dBrm);
-		dPanel.add(dField);
-		dPanel.add(dBar);
-		dPanel.setBorder(BorderFactory.createEmptyBorder(0, 12, small, 12));
+		setBar(dBar, dPanel, dField, d.toString(), small);
 		
 		bottomLeftPanel.add(namePanel);
 		bottomLeftPanel.add(nPanel);
-		bottomLeftPanel.add(ePanel);
+		bottomLeftPanel.add(expPanel);
 		bottomLeftPanel.add(dPanel);
 		mainPanel.add(bottomLeftPanel);
 		
@@ -144,8 +124,8 @@ public class RSADemo extends JFrame {
 	    			s = s.replace(String.valueOf((char) (8217)), String.valueOf((char) (39)));
 	    			try {
 	    				N = new BigInteger(nField.getText());
-	    				exp = new BigInteger(eField.getText());
-	    				if (eField.getText().equals("65537")) {
+	    				exp = new BigInteger(expField.getText());
+	    				if (expField.getText().equals("65537")) {
 	    					outputArea.setText(RSAMethods.encryptString(s, N, exp));
 	    					printInfo(infoArea);
 	    				} else {
@@ -171,7 +151,7 @@ public class RSADemo extends JFrame {
 				try {
 					N = new BigInteger(nField.getText());
 					d = new BigInteger(dField.getText());
-					exp = new BigInteger(eField.getText());
+					exp = new BigInteger(expField.getText());
 					if (d.compareTo(exp.modInverse(M)) == 0) {
 						outputArea.setText(RSAMethods.decryptString(s, N, d));
 						printInfo(infoArea);
@@ -201,7 +181,7 @@ public class RSADemo extends JFrame {
 				inputArea.setDocument(new RSATextAreaCharacterLimit(newLimit));
 				inputArea.setText(currentText);
 				printInfo(infoArea);
-				update(nField, eField, dField);
+				update(nField, expField, dField);
 			}
 		});
 		
@@ -244,6 +224,15 @@ public class RSADemo extends JFrame {
 		this.setTitle("Demo Application");
 		this.setResizable(false);
 		this.setVisible(true);
+	}
+	
+	private void setBar(JScrollBar bar, JPanel panel, JTextField field, String text, int size) {
+		field.setText(text);
+		BoundedRangeModel nameBrm = field.getHorizontalVisibility();
+		bar.setModel(nameBrm);
+		panel.add(field);
+		panel.add(bar);
+		panel.setBorder(BorderFactory.createEmptyBorder(0, 12, size, 12));
 	}
 	
 	private void generate(int bitLength, Random r) {
