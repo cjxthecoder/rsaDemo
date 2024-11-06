@@ -228,8 +228,7 @@ public class RSADemo extends JFrame {
 	
 	private void setBar(JScrollBar bar, JPanel panel, JTextField field, String text, int size) {
 		field.setText(text);
-		BoundedRangeModel nameBrm = field.getHorizontalVisibility();
-		bar.setModel(nameBrm);
+		bar.setModel(field.getHorizontalVisibility());
 		panel.add(field);
 		panel.add(bar);
 		panel.setBorder(BorderFactory.createEmptyBorder(0, 12, size, 12));
