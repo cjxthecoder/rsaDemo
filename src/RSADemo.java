@@ -120,27 +120,27 @@ public class RSADemo extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String s = inputArea.getText();
-	    			s = s.replace(String.valueOf((char) (8217)), String.valueOf((char) (39)));
-	    			try {
-	    				N = new BigInteger(nField.getText());
-	    				exp = new BigInteger(expField.getText());
-	    				if (expField.getText().equals("65537")) {
-	    					outputArea.setText(RSAMethods.encryptString(s, N, exp));
-	    					printInfo(infoArea);
-	    				} else {
-	    					d = exp.modInverse(M);
-	    					dField.setText(d.toString());
-	    					outputArea.setText(RSAMethods.encryptString(s, N, exp));
-	    					printInfo(infoArea);
-	    				}
-	    			} catch (NumberFormatException err) {
-	    				outputArea.setText("");
-	    				infoArea.setText("Please enter a number for N and e.");
-	    			} catch (ArithmeticException err) {
-	    				outputArea.setText("");
-	    				printNonInvertibleInfo(infoArea);
-	    			}
+	    		s = s.replace(String.valueOf((char) (8217)), String.valueOf((char) (39)));
+	    		try {
+	    			N = new BigInteger(nField.getText());
+	    			exp = new BigInteger(expField.getText());
+	    			if (expField.getText().equals("65537")) {
+	    				outputArea.setText(RSAMethods.encryptString(s, N, exp));
+	    				printInfo(infoArea);
+	    			} else {
+	    				d = exp.modInverse(M);
+	    				dField.setText(d.toString());
+	    				outputArea.setText(RSAMethods.encryptString(s, N, exp));
+	    				printInfo(infoArea);
+	   				}
+	   			} catch (NumberFormatException err) {
+	   				outputArea.setText("");
+	   				infoArea.setText("Please enter a number for N and e.");
+	   			} catch (ArithmeticException err) {
+	   				outputArea.setText("");
+	    			printNonInvertibleInfo(infoArea);
 	    		}
+	    	}
 		});
 
 		JButton decryptButton = new JButton(new AbstractAction("Decrypt") {
