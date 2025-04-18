@@ -25,7 +25,7 @@ public class RSADemo extends JFrame {
 	
 	private BigInteger p, q, N, M, exp, d;
 	private BigInteger base = BigInteger.valueOf(MAC_OS_WASTED_HEIGHT + 2);
-	private static final Integer[] BIT_CHOICES = {2048, 1024, 512, 256, 128};
+	private static final Integer[] BIT_CHOICES = {2048, 1024, 512, 256};
 	private static final String[] FRIENDS = {"Serena Zhao", "John Pau", "Felix Alexander"};
 	
 	JPanel mainPanel = new JPanel(new GridLayout(2, 3));
