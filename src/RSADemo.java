@@ -171,7 +171,7 @@ public class RSADemo extends JFrame {
 		JButton generateButton = new JButton(new AbstractAction("New") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				generate((int) bitLengths.getSelectedItem(), new Random());
+				generate((int) bitLengths.getSelectedItem() / 2, new Random());
 				int newLimit = getLimit(N);
 				String currentText = inputArea.getText();
 				if (currentText.length() > newLimit) {
@@ -234,9 +234,11 @@ public class RSADemo extends JFrame {
 	}
 	
 	private void generate(int bitLength, Random r) {
-		p = BigInteger.probablePrime(bitLength, r);
-		q = BigInteger.probablePrime(bitLength, r);
-		N = p.multiply(q);
+		do {
+			p = BigInteger.probablePrime(bitLength, r);
+			q = BigInteger.probablePrime(bitLength, r);
+			N = p.multiply(q);
+		} while (p.subtract(q).abs().compareTo(N.sqrt().sqrt().multiply(BigInteger.TWO)) <= 0);
 		M = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
 		exp = BigInteger.valueOf(65537);
 		d = exp.modInverse(M);
