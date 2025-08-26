@@ -110,9 +110,9 @@ public class RSADemo extends JFrame {
 		outputPanel.add(outputPane);
 		outputPanel.setBorder(BorderFactory.createEmptyBorder(mid, big, mid, big));
 		
-		infoArea.setEditable(false);
 		infoArea.setLineWrap(true);
 		infoArea.setWrapStyleWord(true);
+		infoArea.setEditable(false);
 		infoArea.setText("Session started on " + LocalDateTime.now());
 		JScrollPane infoPane = new JScrollPane(infoArea);
 
