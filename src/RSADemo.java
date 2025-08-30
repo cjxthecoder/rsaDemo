@@ -71,8 +71,8 @@ public class RSADemo extends JFrame {
 		
 		// Remove the following when user input for N & d is implemented
 		generate((int) bitLengths.getSelectedItem(), new Random(3447679086515839964L));
-		nField.setEditable(false);
-		dField.setEditable(false);
+		nField.setEditable(true);
+		dField.setEditable(true);
 		
 		int big = (int) Math.round(screenWidth / 10.0);
 		int mid = (int) Math.round(screenHeight / 20.0);
